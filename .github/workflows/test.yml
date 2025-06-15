@@ -1,7 +1,7 @@
-name: Test
+name: Test and Deploy Workflow
 on: push
 jobs:
-  build:
+  Test:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -14,3 +14,18 @@ jobs:
         run: npm install ci 
       - name: Run tests
         run: npm test
+  Deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+      - name: Install dependencies
+        run: npm install ci 
+      - name: Build project
+        run: npm run build
+      - name: Deploy to production
+        run: echo "Deploying to production..."
